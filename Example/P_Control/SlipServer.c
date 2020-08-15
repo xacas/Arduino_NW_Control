@@ -9,6 +9,8 @@
 #include <netdb.h>
 #include <stdio.h>
 
+#define Q_GAIN 100.0
+
 void server(int sockfd);
 
 int main(void){
@@ -70,15 +72,19 @@ void server(int sockfd){
 	char buf[32];
 	char write_buf[16]="Mac Book\r\n";
 	int buf_len;
+	FILE *fp;
 
 	//what is your name?
 	memset(buf,0,sizeof(buf));
 	buf_len = read(sockfd,buf,2);
-	buf[0]++;buf[1]++;
-	printf("%d,%d\n",buf[0],buf[1]);
+	printf("%f,%f\n",buf[0]/Q_GAIN,buf[1]/Q_GAIN);
 
 	write(sockfd,buf,1);
-	puts("write finish");
+
+	if((fp=fopen("data.csv","a")) != NULL){
+		fprintf(fp,"%f\n",buf[0]/Q_GAIN);
+		fclose(fp);
+	}
 
 	close(sockfd);
 }
