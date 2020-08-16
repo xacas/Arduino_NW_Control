@@ -9,7 +9,10 @@
 #include <netdb.h>
 #include <stdio.h>
 
-#define Q_GAIN 100.0
+// M系列の更新周期
+#define MSEQ_WIDTH 40
+// Quantize gain
+#define Q_GAIN 25.0
 
 void server(int sockfd);
 
@@ -55,34 +58,65 @@ int main(void){
 	}
 
 	while(1){
-		puts("wating...");
 		/* waiting conect request */
 		if((new_sockfd = accept(sockfd,(struct sockaddr *)&writer_addr,&writer_len)) < 0){
 			perror("fail at accept");
 			exit(1);
 		}
-		puts("accept!");
 		server(new_sockfd);
 	}
 	close(sockfd);
 	return 0;
 }
 
+// M系列の変換
+char mseq(){
+  // シフトレジスタ
+  static unsigned char Xn = 1;
+  static unsigned int cnt = MSEQ_WIDTH;
+  unsigned ret;
+
+  cnt--;
+  ret = ((Xn & 64) >> 6) ^ (Xn & 1);
+  if (cnt == 0){
+    Xn = (Xn << 1) + ret;
+    cnt = MSEQ_WIDTH;
+  }
+
+  return ret;
+}
+
+char quantizer(float sig){
+    return (char)(sig*Q_GAIN);
+}
+
+float dequantizer(char sig){
+    return (float)(sig/Q_GAIN);
+}
+
+float control(float e){
+  return 1.0 * e;
+}
+
 void server(int sockfd){
-	char buf[32];
-	char write_buf[16]="Mac Book\r\n";
-	int buf_len;
+	char buf[8]={};
+	char write_buf[8]={};
+	float Vo,V1,Vr,Vi;
 	FILE *fp;
 
-	//what is your name?
-	memset(buf,0,sizeof(buf));
-	buf_len = read(sockfd,buf,2);
-	printf("%f,%f\n",buf[0]/Q_GAIN,buf[1]/Q_GAIN);
+	read(sockfd,buf,2);
+	Vr = 4.0 * (mseq() - 0.5);
+	Vo=dequantizer(buf[0]);
+	V1=dequantizer(buf[1]);
+	Vi=control(Vr-Vo);
 
-	write(sockfd,buf,1);
+	printf("%f,%f,%f,%f\n",Vr,Vo,V1,Vi);
+
+	write_buf[0]=quantizer(Vi);
+	write(sockfd,write_buf,1);
 
 	if((fp=fopen("data.csv","a")) != NULL){
-		fprintf(fp,"%f\n",buf[0]/Q_GAIN);
+		fprintf(fp,"%f,%f,%f\n",Vr,Vo,V1);
 		fclose(fp);
 	}
 
