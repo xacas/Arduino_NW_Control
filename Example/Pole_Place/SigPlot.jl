@@ -9,9 +9,9 @@ function main()
 	Title = "PI Control"
 	Label = ["Vo" "V1"]
 	Dim = length(Label)
-    XLabel = "Time (s)"
-    YLabel = "Voltage (V)"
-    YLimit = (-3,3)
+	XLabel = "Time (s)"
+	YLabel = "Voltage (V)"
+	YLimit = (-3,3)
 	# sampling time
 	dt = 0.1
 	# graph width(number of plotting point)
