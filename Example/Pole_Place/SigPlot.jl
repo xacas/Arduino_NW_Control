@@ -6,7 +6,7 @@ gr(show = true)
 function main()
 
 	# graph setting
-	Title = "PI Control"
+	Title = "Pole Place Control"
 	Label = ["Vo" "V1"]
 	Dim = length(Label)
 	XLabel = "Time (s)"
