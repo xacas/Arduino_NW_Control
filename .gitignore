@@ -1,3 +1,5 @@
 *.csv
 # ignore execution binary
 SlipServer
+# ignore object file
+*.o
