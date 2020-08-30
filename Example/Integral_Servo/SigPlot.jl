@@ -6,7 +6,7 @@ gr(show = true)
 function main()
 
 	# graph setting
-	Title = "PI Control"
+	Title = "Integral Servo Control"
 	Label = ["reference" "Vo" "V1"]
     XLabel = "Time (s)"
     YLabel = "Voltage (V)"
