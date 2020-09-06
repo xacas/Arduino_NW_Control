@@ -9,7 +9,8 @@
  
 # Features
  
-Ethernet shield など追加部品を用いることなく，ネットワーク化制御系で遊ぶことができます．
+ Linux PC と Arduino で tcp/ip 通信をおこないつつ，RC 回路の電圧制御をおこないます．
+ シリアル通信路上で SLIP 回線を構築するため，Ethernet shield など追加部品を用いることなく，ネットワーク化制御系で遊ぶことができます．
  
 # Requirement
  
