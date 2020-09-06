@@ -5,7 +5,7 @@
 
 # DEMO
  
- <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Arduino でネットワーク化制御系が出来た <a href="https://t.co/Vlnlm74yZW">pic.twitter.com/Vlnlm74yZW</a></p>&mdash; にちか (@lxacas) <a href="https://twitter.com/lxacas/status/1294636316978634752?ref_src=twsrc%5Etfw">August 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+ [![thumbnail](https://pbs.twimg.com/ext_tw_video_thumb/1294636262259748870/pu/img/Vcg0JoUhMITbztZ9.jpg)](https://twitter.com/lxacas/status/1294636316978634752/video/1)
  
 # Features
  
