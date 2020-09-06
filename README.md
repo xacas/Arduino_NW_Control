@@ -5,7 +5,7 @@
 
 # DEMO
  
- [![thumbnail](https://pbs.twimg.com/ext_tw_video_thumb/1294636262259748870/pu/img/Vcg0JoUhMITbztZ9.jpg)](https://twitter.com/lxacas/status/1294636316978634752/video/1)
+ [![thumbnail](https://pbs.twimg.com/ext_tw_video_thumb/1294636262259748870/pu/img/Vcg0JoUhMITbztZ9.jpg)](https://twitter.com/i/status/1294636316978634752)
  
 # Features
  
