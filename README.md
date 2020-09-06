@@ -16,12 +16,11 @@ Ethernet shield など追加部品を用いることなく，ネットワーク�
  
 # Installation
 
-↓のリンク先を DL し，Arduino Library にインポートしてください．
-https://github.com/Inokinoki/SerialIP
+↓の[リンク先](https://github.com/Inokinoki/SerialIP)を DL し，Arduino Library にインポートしてください．
 
 # Usage
  
-* デモ動画のサンプル
+デモ動画のサンプル
  
 * Arduino 側
 
@@ -29,7 +28,7 @@ C/example/P_Control/P_Control.ino を Arduino に書き込む
 
 * Linux 側
 
-** PI 制御器サーバの実行
+PI 制御器サーバの実行
 
 ```bash
 git clone https://github.com/xacas/SLIP_NW_Control.git
@@ -39,11 +38,11 @@ cd example/P_Control
 sudo Run.sh
 ```
  
- ** 各信号のリアルタイムプロット
+ 各信号のリアルタイムプロット
  
  ```julia
- include("SigPlot.jl")
- main()
+ julia> include("SigPlot.jl")
+ julia> main()
  ```
  
 # Note
