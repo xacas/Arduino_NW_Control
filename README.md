@@ -5,6 +5,7 @@
 
 # DEMO
  
+ <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Arduino でネットワーク化制御系が出来た <a href="https://t.co/Vlnlm74yZW">pic.twitter.com/Vlnlm74yZW</a></p>&mdash; にちか (@lxacas) <a href="https://twitter.com/lxacas/status/1294636316978634752?ref_src=twsrc%5Etfw">August 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
  
 # Features
  
@@ -35,14 +36,18 @@ git clone https://github.com/xacas/SLIP_NW_Control.git
 cd C
 make
 cd example/P_Control
-sudo Run.sh
+sudo sh Run.sh
 ```
  
  各信号のリアルタイムプロット
  
+ ```bash
+ julia
+ ```
+ 
  ```julia
- julia> include("SigPlot.jl")
- julia> main()
+ include("SigPlot.jl")
+ main()
  ```
  
 # Note
@@ -55,6 +60,6 @@ sudo Run.sh
  
 # Author
  
-* 作成者：日下雅博
+* 作成者：Masahiro Kusaka
 * 所属：？？
 * E-mail：masahiro906@gmail.com
