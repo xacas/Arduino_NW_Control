@@ -18,7 +18,7 @@
  
 # Installation
 
-↓の[リンク先](https://github.com/Inokinoki/SerialIP)を DL し，Arduino Library にインポートしてください．
+[リンク先](https://github.com/Inokinoki/SerialIP)を DL し，Arduino Library にインポートしてください．
 
 # Usage
  
@@ -30,7 +30,7 @@ C/example/P_Control/P_Control.ino を Arduino に書き込む
 
 * Linux 側
 
-PI 制御器サーバの実行
+比例制御器サーバの実行
 
 ```bash
 git clone https://github.com/xacas/SLIP_NW_Control.git
@@ -54,13 +54,17 @@ sudo sh Run.sh
 # Note
  
  Run.sh は，Arduino と SLIP 通信するため，
- slattach や ifconfig を使用します．
- sudo で実行してください．
+ slattach や ifconfig を実行します．
+ 実行には sudo 権限が必要です．
  
- 本リポジトリは，ubuntu 20.04 上で動作を確認しています．
+ 当リポジトリは，ubuntu 20.04 上で動作を確認しています．
+ 
+ 当リポジトリのご利用は，利用者の責任においておこなってください．
+ 当リポジトリの利用により生じた損害に対する責任を負いません．
+ 要望・不具合は Issue にてご連絡ください．
  
 # Author
  
 * 作成者：Masahiro Kusaka
-* 所属：？？
+* 所属：UEC
 * E-mail：masahiro906@gmail.com
