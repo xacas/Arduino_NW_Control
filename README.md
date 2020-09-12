@@ -40,7 +40,7 @@ cd example/P_Control
 sudo sh Run.sh
 ```
  
- 各信号のリアルタイムプロット
+ 各信号のリアルタイムプロット．詳細は[こちら](https://qiita.com/lxacas/items/4f0ab61e59981dcb3cdd)
  
  ```bash
  julia
