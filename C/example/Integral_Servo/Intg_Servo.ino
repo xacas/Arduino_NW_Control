@@ -9,22 +9,22 @@
 #include <SerialIP.h>
 #include <TimerOne.h>
 
-// ピン設定
+// PIN Setting
 #define INPUT_PIN 3
 #define OUTPUT_PIN_1 6
 #define OUTPUT_PIN_2 5
 
-// This is the SMTP server to connect to.  This default assumes an SMTP server
+// This is the Control server to connect to.  This default assumes an Control server
 // on your PC.  Note this is a parameter list, so use commas not dots!
-#define SMTP_SERVER 192,168,5,1
+#define CONTROL_SERVER 192,168,5,1
 
 // IP and subnet that the Arduino will be using.  Commas again, not dots.
 #define MY_IP 192,168,5,2
 #define MY_SUBNET 255,255,255,0
 
-// 量子化ゲイン
+// Quantize Gain
 #define Q_GAIN 25.0
-// If you're using a real Internet SMTP server, the Arduino will need to route
+// If you're using a real Internet Control server, the Arduino will need to route
 // traffic via your PC, so set the PC's IP address here.  Note that this IP is
 // for the PC end of the SLIP connection (not any other IP your PC might have.)
 // Your PC will have to be configured to share its Internet connection over the
@@ -40,21 +40,19 @@ typedef struct {
   char output_buffer[2];
 } connection_data;
 
-uip_ipaddr_t smtp_server;
+uip_ipaddr_t control_server;
 struct uip_conn *conn;
 #define SET_IP(var, ip)  uip_ipaddr(var, ip)
 
-// 状態変数
+// State Variable
 float V1, Vo;
-// 入力
+// Input
 float Vi;
 
-// AD値(0~1023)を-2.5~2.5Vに変換
 float convDac(float y){
   return (y - 511) / 1023.0 * 5.0;
 }
 
-// -2.5~2.5VをPWM値(0~255)に変換
 int convPwm(float u){
   int ret = 255/5*u + 128;
 
@@ -68,12 +66,11 @@ int convPwm(float u){
 
 void setup() {
 
-  // See the HelloWorldServer example for details about this set up procedure.
   Serial.begin(115200);
   SerialIP.use_device(Serial);
   SerialIP.set_uip_callback(uip_callback);
   SerialIP.begin({MY_IP}, {MY_SUBNET});
-  SET_IP(smtp_server, SMTP_SERVER);
+  SET_IP(control_server, CONTROL_SERVER);
 #ifdef GATEWAY_IP
   SerialIP.set_gateway({GATEWAY_IP});
 #endif
@@ -97,7 +94,7 @@ void control() {
   Vo = convDac(analogRead(OUTPUT_PIN_2));
   
   if(!uip_connected()){
-    conn = uip_connect(&smtp_server, HTONS(8000));
+    conn = uip_connect(&control_server, HTONS(8000));
     if (conn == NULL) {
       return;
     }
@@ -134,14 +131,12 @@ int handle_connection(uip_tcp_appstate_t *s,connection_data *d)
 {
 
   PSOCK_BEGIN(&s->p);
-  // Send some text over the connection.
+  // Send Plant output over the connection.
   PSOCK_SEND(&s->p,d->output_buffer,sizeof(d->output_buffer));
 
-  // Read some returned text into the input buffer we set in PSOCK_INIT.  Data
-  // is read until a newline (\n) is received, or the input buffer gets filled
-  // up.  (Which, at 16 chars by default, isn't hard!)
+  // Read control input into the input buffer we set in PSOCK_INIT.  Data
+  // is read until the input buffer gets filled up.
   PSOCK_READBUF(&s->p);
-  //strncpy(Vi, &d->input_buffer,sizeof(&d->input_buffer));
   Vi=dequantizer(d->input_buffer);
 
   // Disconnect.

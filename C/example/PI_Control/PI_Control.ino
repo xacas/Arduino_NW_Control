@@ -14,7 +14,7 @@
 #define OUTPUT_PIN_1 6
 #define OUTPUT_PIN_2 5
 
-// This is the SMTP server to connect to.  This default assumes an SMTP server
+// This is the Control server to connect to.  This default assumes an Control server
 // on your PC.  Note this is a parameter list, so use commas not dots!
 #define CONTROL_SERVER 192,168,5,1
 
@@ -25,7 +25,7 @@
 // Quantize Gain
 #define Q_GAIN 25.0
 
-// If you're using a real Internet SMTP server, the Arduino will need to route
+// If you're using a real Internet Control server, the Arduino will need to route
 // traffic via your PC, so set the PC's IP address here.  Note that this IP is
 // for the PC end of the SLIP connection (not any other IP your PC might have.)
 // Your PC will have to be configured to share its Internet connection over the
@@ -140,14 +140,12 @@ int handle_connection(uip_tcp_appstate_t *s,connection_data *d)
 {
 
   PSOCK_BEGIN(&s->p);
-  // Send some text over the connection.
+  // Send plant data over the connection.
   PSOCK_SEND(&s->p,d->output_buffer,sizeof(d->output_buffer));
 
-  // Read some returned text into the input buffer we set in PSOCK_INIT.  Data
-  // is read until a newline (\n) is received, or the input buffer gets filled
-  // up.  (Which, at 16 chars by default, isn't hard!)
+  // Read control input into the input buffer we set in PSOCK_INIT.  Data
+  // is read until the input buffer gets filled up.
   PSOCK_READBUF(&s->p);
-  //strncpy(Vi, &d->input_buffer,sizeof(&d->input_buffer));
   Vi=dequantizer(d->input_buffer);
 
   // Disconnect.
