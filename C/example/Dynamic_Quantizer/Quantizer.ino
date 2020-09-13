@@ -9,14 +9,14 @@
 #include <SerialIP.h>
 #include <TimerOne.h>
 
-// ピン設定
+// Pin Setting
 #define INPUT_PIN 3
 #define OUTPUT_PIN_1 6
 #define OUTPUT_PIN_2 5
 
-// This is the SMTP server to connect to.  This default assumes an SMTP server
+// This is the Control server to connect to.  This default assumes an Control server
 // on your PC.  Note this is a parameter list, so use commas not dots!
-#define SMTP_SERVER 192,168,5,1
+#define CONTROL_SERVER 192,168,5,1
 
 // IP and subnet that the Arduino will be using.  Commas again, not dots.
 #define MY_IP 192,168,5,2
@@ -24,7 +24,7 @@
 
 // 量子化ゲイン
 #define Q_GAIN 48.0
-// If you're using a real Internet SMTP server, the Arduino will need to route
+// If you're using a real Internet Control server, the Arduino will need to route
 // traffic via your PC, so set the PC's IP address here.  Note that this IP is
 // for the PC end of the SLIP connection (not any other IP your PC might have.)
 // Your PC will have to be configured to share its Internet connection over the
@@ -40,7 +40,7 @@ typedef struct {
   char output_buffer;
 } connection_data;
 
-uip_ipaddr_t smtp_server;
+uip_ipaddr_t control_server;
 struct uip_conn *conn;
 #define SET_IP(var, ip)  uip_ipaddr(var, ip)
 
@@ -74,7 +74,7 @@ void setup() {
   SerialIP.use_device(Serial);
   SerialIP.set_uip_callback(uip_callback);
   SerialIP.begin({MY_IP}, {MY_SUBNET});
-  SET_IP(smtp_server, SMTP_SERVER);
+  SET_IP(control_server, CONTROL_SERVER);
 #ifdef GATEWAY_IP
   SerialIP.set_gateway({GATEWAY_IP});
 #endif
@@ -92,7 +92,6 @@ float dequantizer(char sig){
     return float(sig/Q_GAIN);
   }
 
-// {-2.5,2.5}を{0,1}に変換
 int convDigitalWrite(float u){
   if (u > 0)
     return 1;
@@ -102,11 +101,10 @@ int convDigitalWrite(float u){
 
 void control() {
 
-  //V1 = convDac(analogRead(OUTPUT_PIN_1));
   Vo = convDac(analogRead(OUTPUT_PIN_2));
   
   if(!uip_connected()){
-    conn = uip_connect(&smtp_server, HTONS(8000));
+    conn = uip_connect(&control_server, HTONS(8000));
     if (conn == NULL) {
       return;
     }
