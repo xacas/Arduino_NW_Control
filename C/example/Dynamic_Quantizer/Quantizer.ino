@@ -22,7 +22,7 @@
 #define MY_IP 192,168,5,2
 #define MY_SUBNET 255,255,255,0
 
-// 量子化ゲイン
+// Quantize Gain
 #define Q_GAIN 48.0
 // If you're using a real Internet Control server, the Arduino will need to route
 // traffic via your PC, so set the PC's IP address here.  Note that this IP is
@@ -44,17 +44,15 @@ uip_ipaddr_t control_server;
 struct uip_conn *conn;
 #define SET_IP(var, ip)  uip_ipaddr(var, ip)
 
-// 状態変数
+// State Variable
 float V1, Vo;
-// 入力
+// Input
 float Vi;
 
-// AD値(0~1023)を-2.5~2.5Vに変換
 float convDac(float y){
   return (y - 511) / 1023.0 * 5.0;
 }
 
-// -2.5~2.5VをPWM値(0~255)に変換
 int convPwm(float u){
   int ret = 255/5*u + 128;
 
@@ -68,7 +66,6 @@ int convPwm(float u){
 
 void setup() {
   pinMode(INPUT_PIN, OUTPUT);
-  // See the HelloWorldServer example for details about this set up procedure.
   //Serial.begin(115200);
   Serial.begin(1000000);
   SerialIP.use_device(Serial);
@@ -143,10 +140,8 @@ int handle_connection(uip_tcp_appstate_t *s,connection_data *d)
   PSOCK_SEND(&s->p,&d->output_buffer,sizeof(&d->output_buffer));
 
   // Read some returned text into the input buffer we set in PSOCK_INIT.  Data
-  // is read until a newline (\n) is received, or the input buffer gets filled
-  // up.  (Which, at 16 chars by default, isn't hard!)
+  // is read until the input buffer gets filled up.
   PSOCK_READBUF(&s->p);
-  //strncpy(Vi, &d->input_buffer,sizeof(&d->input_buffer));
   Vi=dequantizer(d->input_buffer);
 
   // Disconnect.
