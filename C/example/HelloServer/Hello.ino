@@ -1,30 +1,9 @@
 /*
- * SerialIP SendEMail example.
+ * SLIP_NW_Control HelloServer example.
  *
  * Based upon uIP SMTP example by Adam Dunkels <adam@sics.se>
- * Ported to Arduino IDE by Adam Nielsen <malvineous@shikadi.net>
- *
- * Connects to an SMTP server and sends an e-mail.  Configure the constants
- * below to ensure you receive it!
- *
- * See the wiki page at <http://www.arduino.cc/playground/Code/SerialIP> for
- * instructions on establishing a connection with the Arduino, including
- * setting up IP addresses.
- *
- * Note that the outgoing connection will time out if you don't get SLIP
- * going quickly enough after the Arduino resets, so once you do have SLIP
- * active, reset the Arduino to start sending the e-mail from the beginning.
- *
- * If you see the TX light blinking every few seconds but don't get an
- * incoming connection, either your PC's firewall is blocking the request
- * or not sharing the Internet connection (if you're using an external
- * SMTP server.)  Under Linux you can allow the Arduino to connect to your
- * PC like this:
- *
- *  # iptables -I INPUT 1 -i sl0 -j ACCEPT
- *
- * But connection sharing is beyond the scope of this comment block :-)
- *
+ * SerialIP was ported to Arduino IDE by Adam Nielsen <malvineous@shikadi.net>
+ * This code is wrriten by Masahiro Kusaka <masahiro906@gmail.com>
  */
 
 #include <SerialIP.h>
