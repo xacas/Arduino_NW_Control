@@ -63,6 +63,16 @@ sudo sh Run.sh
  当リポジトリの利用により生じた損害に対する責任を負いません．
  要望・不具合は Issue にてご連絡ください．
  
+# License
+ 
+ 当リポジトリのコードは，LGPL 2.1 ライセンスで公開します．詳しくは，LICENSE を参照してください．
+ 
+ 当リポジトリのコードで利用する SerialIP wrapper library は， Adam Nielsen 氏 <malvineous@shikadi.net>
+によって書かれています．
+
+また， SerialIP が参照する uIP library は，the Networked Embedded Systems group at the 
+Swedish Institute of Computer Science の Adam Dunkels 氏によって書かれています．
+ 
 # Author
  
 * 作成者：Masahiro Kusaka
