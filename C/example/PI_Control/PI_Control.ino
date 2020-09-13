@@ -83,11 +83,6 @@ void setup() {
   Timer1.start();
 }
 
-// Kp = 1のP制御
-float p_ctrl(float err){
-  return 1.0 * err;
-}
-
 char quantizer(float sig){
     return char(sig*Q_GAIN);
   }
