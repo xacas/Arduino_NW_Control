@@ -1,4 +1,4 @@
-# SLIP_Networked_Control
+# Arduino_Networked_Control
 
 [Arduino Nanoで作る小さな制御理論実験環境](https://qiita.com/HppyCtrlEngnrng/items/38047016944f60724da8) を
 ネットワーク化制御系に拡張して遊ぶためのプログラム群です．
