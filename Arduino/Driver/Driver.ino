@@ -89,7 +89,7 @@ void setup() {
 #else
   Timer1.initialize(50000);
 #endif
-  Timer1.attachInterrupt(control);
+  Timer1.attachInterrupt(open_port);
 
   Timer1.start();
 }
@@ -102,10 +102,7 @@ float dequantizer(char sig){
     return float(sig/Q_GAIN);
   }
 
-void control() {
-
-  //V1 = convDac(analogRead(OUTPUT_PIN_1));
-  //Vo = convDac(analogRead(OUTPUT_PIN_2));
+void open_port() {
   
   if(!uip_connected()){
     conn = uip_connect(&control_server, HTONS(8000));
@@ -113,8 +110,6 @@ void control() {
       return;
     }
   }
-
-  //analogWrite(INPUT_PIN, convPwm(Vi));
   
 }
 
