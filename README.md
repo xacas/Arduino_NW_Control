@@ -33,6 +33,7 @@ C/example/P_Control/P_Control.ino を Arduino に書き込む
 比例制御器サーバの実行
 
 ```bash
+modprobe slip
 git clone https://github.com/xacas/SLIP_NW_Control.git
 cd C
 make
