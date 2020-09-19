@@ -12,7 +12,7 @@
 // M系列の更新周期
 #define MSEQ_WIDTH 120
 // Quantize gain
-#define Q_GAIN 48.0
+#define Q_GAIN 25.0
 
 // M系列の変換
 char mseq(){
@@ -63,16 +63,16 @@ float control(float e){
   static float esum = 0.0;
 
   esum += e * 50e-3;
-  return 1.0 * e + 0.3*esum;
+  return 2.0 * e + 0.9*esum;
 }
 
 void server(int sockfd){
 	char buf[8]={};
 	char write_buf[8]={};
-	float Vo,Vr,Vi,Viq;
+	float Vo,V1,Vr,Vi,Viq;
 	FILE *fp;
 
-    if(read(sockfd,buf,1) < 0){
+    if(read(sockfd,buf,2) < 0){
 		puts("packet read error");
         close(sockfd);
         return ;
@@ -80,10 +80,11 @@ void server(int sockfd){
 
 	Vr = 4.0 * (mseq() - 0.5);
 	Vo=dequantizer(buf[0]);
+	V1=dequantizer(buf[1]);
 	Vi=control(Vr-Vo);
 	Viq=Qd(Vi);
 
-	printf("%f,%f,%f\n",Vr,Vo,Viq);
+	printf("%f,%f,%f,%f\n",Vr,Vo,V1,Viq);
 
 	write_buf[0]=quantizer(Viq);
     if(write(sockfd,write_buf,1) < 0){
@@ -93,7 +94,7 @@ void server(int sockfd){
     }
 
 	if((fp=fopen("data.csv","a")) != NULL){
-		fprintf(fp,"%f,%f\n",Vr,Vo);
+		fprintf(fp,"%f,%f,%f\n",Vr,Vo,V1);
 		fclose(fp);
 	}
 

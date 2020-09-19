@@ -32,6 +32,9 @@
 // SLIP interface for this to work.
 //#define GATEWAY_IP 192,168,5,1
 
+//Fast Mode(e.g. Dynamic Quantizer example)
+//#define FAST_MODE
+
 // Because some of the weird uIP declarations confuse the Arduino IDE, we
 // need to manually declare a couple of functions.
 void uip_callback(uip_tcp_appstate_t *s);
@@ -69,7 +72,11 @@ int convPwm(float u){
 
 void setup() {
 
+#ifndef FAST_MODE
   Serial.begin(115200);
+#else
+  Serial.begin(1000000);
+#endif
   SerialIP.use_device(Serial);
   SerialIP.set_uip_callback(uip_callback);
   SerialIP.begin({MY_IP}, {MY_SUBNET});
@@ -77,7 +84,11 @@ void setup() {
 #ifdef GATEWAY_IP
   SerialIP.set_gateway({GATEWAY_IP});
 #endif
+#ifndef FAST_MODE
   Timer1.initialize(100000);
+#else
+  Timer1.initialize(50000);
+#endif
   Timer1.attachInterrupt(control);
 
   Timer1.start();
@@ -93,8 +104,8 @@ float dequantizer(char sig){
 
 void control() {
 
-  V1 = convDac(analogRead(OUTPUT_PIN_1));
-  Vo = convDac(analogRead(OUTPUT_PIN_2));
+  //V1 = convDac(analogRead(OUTPUT_PIN_1));
+  //Vo = convDac(analogRead(OUTPUT_PIN_2));
   
   if(!uip_connected()){
     conn = uip_connect(&control_server, HTONS(8000));
@@ -103,7 +114,7 @@ void control() {
     }
   }
 
-  analogWrite(INPUT_PIN, convPwm(Vi));
+  //analogWrite(INPUT_PIN, convPwm(Vi));
   
 }
 
@@ -117,6 +128,8 @@ void uip_callback(uip_tcp_appstate_t *s)
   if (uip_connected()) {
     connection_data *d = (connection_data *)malloc(sizeof(connection_data));
     s->user = d;
+    V1 = convDac(analogRead(OUTPUT_PIN_1));
+    Vo = convDac(analogRead(OUTPUT_PIN_2));
     d->output_buffer[0]=quantizer(Vo);
     d->output_buffer[1]=quantizer(V1);
     PSOCK_INIT(&s->p, (uint8_t *)(&d->input_buffer),sizeof(&d->input_buffer));
@@ -142,7 +155,7 @@ int handle_connection(uip_tcp_appstate_t *s,connection_data *d)
   // is read until the input buffer gets filled up.
   PSOCK_READBUF(&s->p);
   Vi=dequantizer(d->input_buffer);
-
+  analogWrite(INPUT_PIN, convPwm(Vi));
   // Disconnect.
   PSOCK_CLOSE(&s->p);
 
