@@ -1,12 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-#include <sys/fcntl.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
 #include <stdio.h>
 
 // M系列の更新周期

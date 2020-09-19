@@ -1,12 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-#include <sys/fcntl.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
 #include <stdio.h>
 
 // M系列の更新周期
@@ -26,7 +18,7 @@ char mseq(){
   if (cnt == 0){
     Xn = (Xn << 1) + ret;
     cnt = MSEQ_WIDTH;
-  }
+}
 
   return ret;
 }
@@ -43,7 +35,7 @@ float control(float e){
   static float esum = 0.0;
 
   esum += e * 100e-3;
-  return 1.0 * e + 0.3*esum;
+  return 3.0 * e + 1.0*esum;
 }
 
 void server(int sockfd){
