@@ -1,14 +1,16 @@
 using Plots
 using CSV
 
-gr(show = true)
+gr(show = false)
 
 function main()
 
 	# graph setting
 	Title = basename(pwd())
-	Label = ["reference" "Vo" "V1"]
-	Dim = length(Label)
+	OLabel = ["reference" "Vo" "V1"]
+	ILabel = [ "Vi" ]
+	ODim = length(OLabel)
+	Dim = ODim+length(ILabel)
 	XLabel = "Time (s)"
 	YLabel = "Voltage (V)"
 	YLimit = (-3,3)
@@ -21,7 +23,7 @@ function main()
 	y = zeros(width,Dim)
 	x_offset = 0
 
-	for i in 1:2
+	for i in 1:2000
 		data = CSV.read("data.csv",header=false)
 		datalen = length(data[!,1])
 		if datalen <= width
@@ -29,8 +31,12 @@ function main()
 		else
 			y = Matrix(data[end-(width-1):end,1:Dim])
 			x_offset = dt*(datalen-width)
-		end	
-    	display(plot(x + x_offset*ones(width,1),y,
-    	title = Title,label = Label,xlabel = XLabel,ylabel = YLabel,ylims = YLimit))
+		end
+		p1=plot(x + x_offset*ones(width,1),y[1:end,1:ODim],
+		title = Title*" Output",label = OLabel)
+		p2=plot(x + x_offset*ones(width,1),y[1:end,ODim+1:end],
+		title = Title*" Input",label = ILabel[1])
+		display(plot(p1,p2,layout=(2,1),
+		xlabel = XLabel,ylabel = YLabel,ylims = YLimit))
 	end
 end
