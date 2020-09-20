@@ -1,10 +1,15 @@
 MAIN=../../main/main.o
+UTIL=../../utility/Msequence.o ../../utility/Quantizer.o
+IFLAG=../../utility/
 
-SlipServer:	SlipServer.c $(MAIN)
-	$(CC) -Wall -O3 -o $@ $< $(MAIN)
+SlipServer:	SlipServer.c $(MAIN) $(UTIL)
+	$(CC) -Wall -O3 -o $@ $< $(MAIN) $(UTIL) -I $(IFLAG)
 
 $(MAIN):	../../main/main.c
 	$(MAKE) -C $(dir $(MAIN))
+
+$(UTIL):	../../utility/Msequence.c
+	$(MAKE) -C $(dir $(UTIL))
 
 .PHONY:	clean
 clean:

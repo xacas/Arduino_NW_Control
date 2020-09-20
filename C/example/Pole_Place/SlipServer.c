@@ -1,18 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
-
-// M系列の更新周期
-#define MSEQ_WIDTH 120
-// Quantize gain
-#define Q_GAIN 25.0
-
-char quantizer(float sig){
-    return (char)(sig*Q_GAIN);
-}
-
-float dequantizer(char sig){
-    return (float)(sig/Q_GAIN);
-}
+#include "Msequence.h"
+#include "Quantizer.h"
 
 float control(float Vo, float V1){
 	return -2.9145*Vo - 0.0043*V1;

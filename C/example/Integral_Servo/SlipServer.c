@@ -1,35 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
-
-// M系列の更新周期
-#define MSEQ_WIDTH 120
-// Quantize gain
-#define Q_GAIN 25.0
-
-// M系列の変換
-char mseq(){
-  // シフトレジスタ
-  static unsigned char Xn = 1;
-  static unsigned int cnt = MSEQ_WIDTH;
-  unsigned ret;
-
-  cnt--;
-  ret = ((Xn & 64) >> 6) ^ (Xn & 1);
-  if (cnt == 0){
-    Xn = (Xn << 1) + ret;
-    cnt = MSEQ_WIDTH;
-  }
-
-  return ret;
-}
-
-char quantizer(float sig){
-    return (char)(sig*Q_GAIN);
-}
-
-float dequantizer(char sig){
-    return (float)(sig/Q_GAIN);
-}
+#include "Msequence.h"
+#include "Quantizer.h"
 
 float control(float Vo, float V1,float Vr){
 	static float Ve = 0.0;
