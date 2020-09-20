@@ -31,7 +31,7 @@ void server(int sockfd){
 	}
 
 	if((fp=fopen("data.csv","a")) != NULL){
-		fprintf(fp,"%f,%f,%f\n",Vr,Vo,V1);
+		fprintf(fp,"%f,%f,%f,%f\n",Vr,Vo,V1,Vi);
 		fclose(fp);
 	}
 
