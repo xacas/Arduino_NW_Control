@@ -32,6 +32,9 @@
 // SLIP interface for this to work.
 //#define GATEWAY_IP 192,168,5,1
 
+//Enable Input Disturbance(e.g. Pole Place example)
+//#define INPUT_DIST
+
 //Fast Mode(e.g. Dynamic Quantizer example)
 //#define FAST_MODE
 
@@ -150,7 +153,11 @@ int handle_connection(uip_tcp_appstate_t *s,connection_data *d)
   // is read until the input buffer gets filled up.
   PSOCK_READBUF(&s->p);
   Vi=dequantizer(d->input_buffer);
+#ifndef INPUT_DIST  
   analogWrite(INPUT_PIN, convPwm(Vi));
+#else
+  analogWrite(INPUT_PIN, convPwm(Vi+random(-20,21)/10.0));
+#endif
   // Disconnect.
   PSOCK_CLOSE(&s->p);
 
