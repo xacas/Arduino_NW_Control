@@ -3,7 +3,7 @@ UTIL=../../utility/Msequence.o ../../utility/Quantizer.o
 IFLAG=../../utility/
 
 SlipServer:	SlipServer.c $(MAIN) $(UTIL)
-	$(CC) -Wall -O3 -o $@ $< $(MAIN) $(UTIL) -I $(IFLAG)
+	$(CC) -Wall -O3 -o $@ $< $(MAIN) $(UTIL) -I $(IFLAG) -lm
 
 $(MAIN):	../../main/main.c
 	$(MAKE) -C $(dir $(MAIN))

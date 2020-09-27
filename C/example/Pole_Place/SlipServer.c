@@ -18,13 +18,13 @@ void server(int sockfd){
 		return ;
 	}
 	Vr = 0.0;
-	Vo=dequantizer(buf[0]);
-	V1=dequantizer(buf[1]);
+	Vo=Uni_dequantizer(buf[0]);
+	V1=Uni_dequantizer(buf[1]);
 	Vi=control(Vo-Vr,V1);
 
 	printf("%f.%f,%f,%f\n",Vr,Vo,V1,Vi);
 
-	write_buf[0]=quantizer(Vi);
+	write_buf[0]=Uni_quantizer(Vi);
 	if(write(sockfd,write_buf,1) < 0){
 		close(sockfd);
 		return ;

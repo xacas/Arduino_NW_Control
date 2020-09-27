@@ -1,10 +1,17 @@
 #ifndef QUANTIZER_H
 #define QUANTIZER_H
 
-#define Q_GAIN 25.0
+#define U_GAIN 2.8
+#define E_GAIN 2.8
 
-char quantizer(float sig);
+//Uniform quantizer
+char Uni_quantizer(float u);
 
-float dequantizer(char sig);
+float Uni_dequantizer(char v);
+
+//Exponential quantizer
+char Exp_quantizer(float u);
+
+char Exp_quantizer2(float u);
 
 #endif

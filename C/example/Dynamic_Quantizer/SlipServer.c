@@ -43,14 +43,14 @@ void server(int sockfd){
     }
 
 	Vr = 4.0 * (mseq() - 0.5);
-	Vo=dequantizer(buf[0]);
-	V1=dequantizer(buf[1]);
+	Vo=Uni_dequantizer(buf[0]);
+	V1=Uni_dequantizer(buf[1]);
 	Vi=control(Vr-Vo);
 	Viq=Qd(Vi);
 
 	printf("%f,%f,%f,%f\n",Vr,Vo,V1,Viq);
 
-	write_buf[0]=quantizer(Viq);
+	write_buf[0]=Uni_quantizer(Viq);
     if(write(sockfd,write_buf,1) < 0){
 		puts("packet write error");
         close(sockfd);
