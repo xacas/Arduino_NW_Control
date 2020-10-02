@@ -23,7 +23,7 @@
 #define MY_SUBNET 255,255,255,0
 
 // Quantize Gain
-#define Q_GAIN 25.0
+#define Q_GAIN 48.0
 
 // If you're using a real Internet Control server, the Arduino will need to route
 // traffic via your PC, so set the PC's IP address here.  Note that this IP is
