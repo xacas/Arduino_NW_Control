@@ -8,7 +8,7 @@ len=length(x);
 Vo=zeros(len,1);
 V1=zeros(len,1);
 Vi=zeros(len,1);
-Vr=2;
+Vr=[zeros(len/2,1);2*ones(len/2,1)];
 
 % Create tcpip object
 sock=tcpip('192.168.5.2',8000,'NetworkRole','server');
@@ -18,8 +18,6 @@ haxes1=subplot(2,1,1);
 h1=animatedline(haxes1,'MaximumNumPoints',len*2);
 axis([0 time -3 3])
 title(haxes1,'Output Signal')
-line=refline(haxes1,[0 Vr]);
-line.LineStyle='--';
 grid on
 
 % Create Input Signal Figure
@@ -38,8 +36,8 @@ for k=1:len
     read_buffer=fread(sock,2,'int8');
     Vo(k)=read_buffer(1)/Q_GAIN;
     V1(k)=read_buffer(2)/Q_GAIN;
-    Vi(k)=control(Vo(k),V1(k),Vr);
-    disp([Vr Vo(k) V1(k) Vi(k)]);
+    Vi(k)=control(Vo(k),V1(k),Vr(k));
+    disp([Vr(k) Vo(k) V1(k) Vi(k)]);
     % Send Voltage Input
     fwrite(sock,Vi(k)*Q_GAIN,'int8');
     % Close tcpip
