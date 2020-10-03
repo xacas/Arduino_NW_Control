@@ -9,11 +9,6 @@
 #include <netdb.h>
 #include <stdio.h>
 
-// M系列の更新周期
-#define MSEQ_WIDTH 120
-// Quantize gain
-#define Q_GAIN 25.0
-
 void server(int sockfd);
 
 int main(void){
