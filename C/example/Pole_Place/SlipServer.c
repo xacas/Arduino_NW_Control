@@ -20,7 +20,7 @@ void server(int sockfd){
 	Vr = 0.0;
 	Vo=Uni_dequantizer(buf[0]);
 	V1=Uni_dequantizer(buf[1]);
-	Vi=control(Vo-Vr,V1);
+	Vi=control(Vo,V1);
 
 	printf("%f.%f,%f,%f\n",Vr,Vo,V1,Vi);
 
