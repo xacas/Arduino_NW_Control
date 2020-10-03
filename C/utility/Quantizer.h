@@ -1,7 +1,10 @@
 #ifndef QUANTIZER_H
 #define QUANTIZER_H
 
-#define U_GAIN 2.8
+#define U_GAIN 48.0
+#define U_MAX 127
+#define U_MIN -128
+
 #define E_GAIN 2.8
 
 //Uniform quantizer

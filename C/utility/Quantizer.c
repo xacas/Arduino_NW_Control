@@ -3,10 +3,10 @@
 
 char Uni_quantizer(float u){
 	char v=(char)(u*U_GAIN);
-	if(v>7){
-		v=7;
-	}else if(v<-7){
-		v=-7;
+	if(v>U_MAX){
+		v=U_MAX;
+	}else if(v<U_MIN){
+		v=U_MIN;
 	}
 	return v;
 }
