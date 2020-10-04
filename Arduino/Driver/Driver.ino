@@ -1,5 +1,5 @@
 /*
- * SLIP_NW_Control PI_Control example.
+ * Arduino_NW_Control Driver example.
  *
  * Based upon uIP SMTP example by Adam Dunkels <adam@sics.se>
  * SerialIP was ported to Arduino IDE by Adam Nielsen <malvineous@shikadi.net>
