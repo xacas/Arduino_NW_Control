@@ -13,8 +13,8 @@ char Uni_quantizer(float u);
 float Uni_dequantizer(char v);
 
 //Exponential quantizer
-char Exp_quantizer(float u);
+char Log_quantizer(float u);
 
-char Exp_quantizer2(float u);
+char Log_quantizer2(float u);
 
 #endif

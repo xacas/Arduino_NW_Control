@@ -16,9 +16,9 @@ float Uni_dequantizer(char v){
 	return u;
 }
 
-char Exp_quantizer(float u){
+char Log_quantizer(float u){
     if(u<0.0){
-        return 15-Exp_quantizer(-u);
+        return 15-Log_quantizer(-u);
     }else{
         float ug=u*E_GAIN;
         if(ug<0.09375)
@@ -40,9 +40,9 @@ char Exp_quantizer(float u){
     }
 }
 
-char Exp_quantizer2(float u){
+char Log_quantizer2(float u){
     if(u<0.0){
-        return 15-Exp_quantizer2(-u);
+        return 15-Log_quantizer2(-u);
     }else{
         float ug=u*E_GAIN;
         float base=2.0;
