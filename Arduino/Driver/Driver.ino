@@ -38,6 +38,14 @@
 //Fast Mode(e.g. Dynamic Quantizer example)
 //#define FAST_MODE
 
+//Enable Logarithmic DeQuantizer
+//#define LOG_DEQ
+
+#ifdef LOG_DEQ
+float Log_Dequantizer[16]={-8.0,-4.0,-2.0,-1.0,-0.5,-0.25,-0.125,-0.0,
+                            0.0,0.125,0.25,0.5,1.0,2.0,4.0,8.0};
+#endif
+
 // Because some of the weird uIP declarations confuse the Arduino IDE, we
 // need to manually declare a couple of functions.
 void uip_callback(uip_tcp_appstate_t *s);
@@ -152,7 +160,11 @@ int handle_connection(uip_tcp_appstate_t *s,connection_data *d)
   // Read control input into the input buffer we set in PSOCK_INIT.  Data
   // is read until the input buffer gets filled up.
   PSOCK_READBUF(&s->p);
+#ifndef LOG_DEQ
   Vi=dequantizer(d->input_buffer);
+#else
+  Vi=Log_Dequantizer[d->input_buffer]/2.8;
+#endif
 #ifndef INPUT_DIST  
   analogWrite(INPUT_PIN, convPwm(Vi));
 #else
