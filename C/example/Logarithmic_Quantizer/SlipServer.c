@@ -25,7 +25,7 @@ void server(int sockfd){
 
 	printf("%f.%f,%f,%f\n",Vr,Vo,V1,Vi);
 
-	write_buf[0]=Exp_quantizer2(Vi);
+	write_buf[0]=Log_quantizer(Vi);
 	if(write(sockfd,write_buf,1) < 0){
 		close(sockfd);
 		return ;
