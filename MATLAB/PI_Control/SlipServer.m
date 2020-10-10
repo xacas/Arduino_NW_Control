@@ -8,7 +8,7 @@ len=length(x);
 Vo=zeros(len,1);
 V1=zeros(len,1);
 Vi=zeros(len,1);
-Vr=2;
+Vr=zeros(len,1);
 
 % Create tcpip object
 sock=tcpip('192.168.5.2',8000,'NetworkRole','server');
@@ -29,6 +29,10 @@ axis([0 time -3 3])
 title(haxes2,'Input Signal')
 grid on
 
+for k=1:len
+    Vr(k)=Mseq();
+end
+
 % Control Loop
 for k=1:len
     % Open tcpip
@@ -38,8 +42,8 @@ for k=1:len
     read_buffer=fread(sock,2,'int8');
     Vo(k)=read_buffer(1)/Q_GAIN;
     V1(k)=read_buffer(2)/Q_GAIN;
-    Vi(k)=control(Vr-Vo(k));
-    disp([Vr Vo(k) V1(k) Vi(k)]);
+    Vi(k)=control(Vr(k)-Vo(k));
+    disp([Vr(k) Vo(k) V1(k) Vi(k)]);
     % Send Voltage Input
     fwrite(sock,Vi(k)*Q_GAIN,'int8');
     % Close tcpip
