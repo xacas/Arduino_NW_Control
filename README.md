@@ -38,23 +38,24 @@ git clone https://github.com/xacas/SLIP_NW_Control.git
 cd C
 make
 cd example/P_Control
-sudo sh Run.sh
+sudo sh StartUp.sh
 ```
  
  各信号のリアルタイムプロット．詳細は[こちら](https://qiita.com/lxacas/items/4f0ab61e59981dcb3cdd)
  
  ```bash
+ cd C/example/P_Control
  julia
  ```
  
  ```julia
- include("SigPlot.jl")
+ include("../../../Julia/SignalPlotting.jl")
  main()
  ```
  
 # Note
  
- * Run.sh は，Arduino と SLIP 通信するため，
+ * StartUp.sh は，Arduino と SLIP 通信するため，
  slattach や ifconfig を実行します．
  実行には sudo 権限が必要です．
  
@@ -67,6 +68,8 @@ sudo sh Run.sh
 # License
  
  当リポジトリのコードは，LGPL 2.1 ライセンスで公開します．詳しくは，LICENSE を参照してください．
+ 
+ 当リポジトリの Arduino コードは，[@HppyCtrlEngnrng 氏](https://qiita.com/HppyCtrlEngnrng)のコードをベースにしています．
  
  当リポジトリのコードで利用する SerialIP wrapper library は， Adam Nielsen 氏 <malvineous@shikadi.net>
 によって書かれています．
