@@ -6,8 +6,8 @@
 float control(float Vo, float V1,float Vr){
 	static float Ve = 0.0;
 	Ve += (Vo-Vr)*100e-3;
-	/* pole place @ 0.75+0.1i, 0.75-0.1i, -0.01 */
-	float Vi = -2.0802*Vo - 0.0562*V1 - 0.8211*Ve;
+	/* pole place @ 0.75+0.1i, 0.75-0.1i, -0.02 */
+	float Vi = -1.2460*Vo - 0.1081*V1 - 1.6422*Ve;
 	if(Vi>2.5){
 		Vi=2.5;
 	}else if(Vi<-2.5){
