@@ -1,14 +1,14 @@
 clear all;
 Q_GAIN=48;
 dt=0.1;
-time=30;
+time=100;
 
 x=dt:dt:time;
 len=length(x);
 Vo=zeros(len,1);
 V1=zeros(len,1);
 Vi=zeros(len,1);
-Vr=[zeros(len/2,1);2*ones(len/2,1)];
+Vr=zeros(len,1);
 
 % Create tcpip object
 sock=tcpip('192.168.5.2',8000,'NetworkRole','server');
@@ -26,6 +26,10 @@ h2=animatedline(haxes2,'MaximumNumPoints',len*2);
 axis([0 time -3 3])
 title(haxes2,'Input Signal')
 grid on
+
+for k=1:len
+    Vr(k)=4*(Mseq()-0.5);
+end
 
 % Control Loop
 for k=1:len
