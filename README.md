@@ -34,8 +34,8 @@ C/example/P_Control/P_Control.ino を Arduino に書き込む
 
 ```bash
 modprobe slip
-git clone https://github.com/xacas/SLIP_NW_Control.git
-cd C
+git clone https://github.com/xacas/Arduino_NW_Control.git
+cd Arduino_NW_Control/C
 make
 cd example/P_Control
 sudo sh StartUp.sh
