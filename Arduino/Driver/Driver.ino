@@ -3,7 +3,8 @@
  *
  * Based upon uIP SMTP example by Adam Dunkels <adam@sics.se>
  * SerialIP was ported to Arduino IDE by Adam Nielsen <malvineous@shikadi.net>
- * This code is wrriten by Masahiro Kusaka <masahiro906@gmail.com>
+ * This code is based on Mr. @HppyCtrlEngnrng 's example  <https://qiita.com/HppyCtrlEngnrng>
+ * This code is written by Masahiro Kusaka <masahiro906@gmail.com>
  */
 
 #include <SerialIP.h>
@@ -35,7 +36,7 @@
 //Enable Input Disturbance(e.g. Pole Place example)
 //#define INPUT_DIST
 
-//Fast Mode(e.g. Dynamic Quantizer example)
+//Enable Fast Mode(e.g. Dynamic Quantizer example)
 //#define FAST_MODE
 
 //Enable Logarithmic DeQuantizer
