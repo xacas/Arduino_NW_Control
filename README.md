@@ -2,6 +2,7 @@
 
 [Arduino Nanoで作る小さな制御理論実験環境](https://qiita.com/HppyCtrlEngnrng/items/38047016944f60724da8) を
 ネットワーク化制御系に拡張して遊ぶためのプログラム群です．
+解説記事は[こちら](https://qiita.com/lxacas/items/7af052ff38fa6a4c5435)
 
 # DEMO
  
